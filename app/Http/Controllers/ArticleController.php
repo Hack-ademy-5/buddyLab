@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tag;
 use App\Models\Article;
 use Illuminate\Http\Request;
 
@@ -25,8 +26,9 @@ class ArticleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        return view('articles.create');
+    {   
+        $tags = Tag::all();
+        return view('articles.create',compact('tags'));
     }
 
     /**
@@ -40,11 +42,20 @@ class ArticleController extends Controller
         $validatedData = $request->validate([
             'title'=>'required',
             'text'=>'required',
-            'img'=>'required'
+            'img'=>'required',
+            'tags'=>'required'
         ]);
 
         //Guardamos el articulo con mass assignement
-        Article::create($validatedData);
+        $article = Article::create($validatedData);
+        
+        // para cada id recuperado desde el formulario lo attach 
+        // foreach ($validatedData['tags'] as $tagId) {
+        //     $article->tags()->attach($tagId);
+        // }
+        
+        // a partir del array de ids sincroniza el estado de la tabla article_tag
+        $article->tags()->sync($validatedData['tags']);
 
         return redirect()->route('home')->withMessage('Artículo creado');
     }

@@ -13,12 +13,13 @@
             <img src="{{$article->img}}" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">{{$article->title}}</h5>
-               
+                @foreach ($article->tags as $tag)
+                <a href="#" class="btn btn-success btn-sm">{{$tag->name}}</a>
+                @endforeach
                 <a href="#" class="btn btn-primary">Ver mas</a>
             </div>
         </div>
     </div>
     @endforeach
 </div>
-
 @endsection
