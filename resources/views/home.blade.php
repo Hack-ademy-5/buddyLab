@@ -13,7 +13,7 @@
             <div class="card-body">
                 <h5 class="card-title">{{$article->title}}</h5>
                
-                <a href="#" class="btn btn-primary">Ver mas</a>
+                <a href="{{route('articles.show',['id'=>$article->id])}}" class="btn btn-primary">Ver mas</a>
             </div>
         </div>
     </div>
