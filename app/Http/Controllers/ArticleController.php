@@ -81,9 +81,11 @@ class ArticleController extends Controller
      * @param  \App\Models\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function edit(Article $article)
+    public function edit($id)
     {
-        //
+        $article = Article::findOrFail($id);
+        $tags = Tag::all();
+        return view('articles.edit',compact('article','tags'));
     }
 
     /**
@@ -93,9 +95,22 @@ class ArticleController extends Controller
      * @param  \App\Models\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Article $article)
+    public function update(Request $request, $id)
     {
-        //
+        $article = Article::findOrFail($id);
+
+        $validatedData = $request->validate([
+            'title'=>'required',
+            'text'=>'required',
+            'img'=>'required',
+            'tags'=>'required'
+        ]);
+
+        $article->update($validatedData);
+
+        $article->tags()->sync($validatedData['tags']);
+
+        return redirect()->route('articles.show',['id'=>$id])->withMessage("Articulo actualizado!");
     }
 
     /**
@@ -104,8 +119,12 @@ class ArticleController extends Controller
      * @param  \App\Models\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Article $article)
+    public function destroy($id)
     {
-        //
+        $article = Article::findOrFail($id);
+
+        $article->delete();
+
+        return redirect()->route('articles.index')->withMessage('Articulo eliminado');
     }
 }

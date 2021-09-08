@@ -10,14 +10,18 @@
             @endforeach
         </div>
         <div>
-            <a href="" class="btn btn-warning">Modificar</a>
-            
+            <a href="{{route('articles.edit',['id'=>$article->id])}}" class="btn btn-warning">Modificar</a>
+            <form action="{{route('articles.destroy',['id'=>$article->id])}}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger">Eliminar</button>
+            </form>
         </div>
     </div>
 </div>
 <div class="row">
     <div class="col-12">
-        <img src="{{$article->img}}" alt="">
+        <img src="{{$article->img}}" alt="" class="img-fluid">
         <p>{{$article->text}}</p>
     </div>
 </div>
