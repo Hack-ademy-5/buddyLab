@@ -31,20 +31,15 @@
             <div class="mb-3">
                 <select class="form-select" multiple aria-label="multiple select example" name="tags[]">
                     @foreach ($tags as $tag)
+                    <option value="{{$tag->id}}"
                         @if(old('tags'))
-                            @if(!in_array($tag->id,old('tags')))
-                                <option value="{{$tag->id}}" >{{$tag->name}}</option>    
-                            @else
-                                <option value="{{$tag->id}}" selected>{{$tag->name}}</option>    
+                            @if(in_array($tag->id,old('tags')))
+                                 selected   
                             @endif
-                        @else
-                            @if($article->tags->contains($tag))
-                                <option value="{{$tag->id}}" selected>{{$tag->name}}</option>   
-                            @else
-                                <option value="{{$tag->id}}" >{{$tag->name}}</option>   
-                            @endif
+                        @elseif($article->tags->contains($tag))
+                                selected   
                         @endif
-
+                    >{{$tag->name}}</option>  
                     @endforeach
 
                     {{-- @foreach ($tags as $tag)
