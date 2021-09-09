@@ -23,7 +23,7 @@
             </div>
             <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">Texto</label>
-                <textarea name="text" id="" cols="30" rows="10" class="form-control">{{old('text') ?? $article->text}}</textarea>
+                <textarea name="text" id="article" cols="30" rows="10" class="form-control">{{old('text') ?? $article->text}}</textarea>
                 @error('text')
                 {{$message}}
                 @enderror
@@ -58,3 +58,23 @@
     </div>
 </div>
 @endsection
+@push('js')
+<script src="https://cdn.tiny.cloud/1/dsuwf3r1b146psvr73xvrh3duc8aloa3dpabqpfmbi3h36vu/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+    tinymce.init({
+      selector: 'textarea#article',
+      height: 500,
+  menubar: false,
+  plugins: [
+    'advlist autolink lists link image charmap print preview anchor',
+    'searchreplace visualblocks code fullscreen',
+    'insertdatetime media table paste code help wordcount'
+  ],
+  toolbar: 'undo redo | formatselect | ' +
+  'bold italic backcolor | alignleft aligncenter ' +
+  'alignright alignjustify | bullist numlist outdent indent | ' +
+  'removeformat | help',
+  content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+   });
+  </script>
+@endpush
