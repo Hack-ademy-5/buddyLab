@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\ArticleController;
-
+use App\Http\Controllers\ContactController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,3 +27,7 @@ Route::get('articles/{id}', [ArticleController::class,'show'])->name('articles.s
 Route::get('articles/{id}/edit', [ArticleController::class,'edit'])->name('articles.edit');
 Route::put('articles/{id}', [ArticleController::class,'update'])->name('articles.update');
 Route::delete('articles/{id}', [ArticleController::class,'destroy'])->name('articles.destroy');
+
+// contacto
+Route::get('contacts/create',[ContactController::class,'create'])->name('contacts.create');
+Route::post('contacts',[ContactController::class,'store'])->name('contacts.store');
