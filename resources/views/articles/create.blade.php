@@ -2,7 +2,7 @@
 @section('content')
 <div class="row">
     <div class="col-12">
-        <form method="POST" action="{{route('articles.store')}}">
+        <form method="POST" action="{{route('articles.store')}}" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Título</label>
@@ -14,7 +14,7 @@
             </div>
             <div class="mb-3">
                 <label for="exampleInputPassword1" class="form-label">Imagen</label>
-                <input type="text" class="form-control" id="exampleInputPassword1" name="img" value="{{old('img')}}">
+                <input type="file" class="form-control" id="exampleInputPassword1" name="img" value="{{old('img')}}">
                 @error('img')
                 {{$message}}
                 @enderror

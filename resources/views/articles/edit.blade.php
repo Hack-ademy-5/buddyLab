@@ -2,7 +2,7 @@
 @section('content')
 <div class="row">
     <div class="col-12">
-        <form method="POST" action="{{route('articles.update',['id'=>$article->id])}}">
+        <form method="POST" action="{{route('articles.update',['id'=>$article->id])}}" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="mb-3">
@@ -14,8 +14,9 @@
                 @enderror
             </div>
             <div class="mb-3">
+                <img src="{{Storage::url($article->img)}}" alt="" class="img-fluid">
                 <label for="exampleInputPassword1" class="form-label">Imagen</label>
-                <input type="text" class="form-control" id="exampleInputPassword1" name="img" value="{{old('img') ?? $article->img}}">
+                <input type="file" class="form-control" id="exampleInputPassword1" name="img">
                 @error('img')
                 {{$message}}
                 @enderror

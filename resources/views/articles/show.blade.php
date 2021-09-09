@@ -10,6 +10,9 @@
             @endforeach
         </div>
         <div>
+            <img src="{{Storage::url($article->img)}}" alt="" class="img-fluid">
+        </div>
+        <div>
             <a href="{{route('articles.edit',['id'=>$article->id])}}" class="btn btn-warning">Modificar</a>
             <form action="{{route('articles.destroy',['id'=>$article->id])}}" method="POST">
                 @csrf

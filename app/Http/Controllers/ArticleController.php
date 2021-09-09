@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Tag;
 use App\Models\Article;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
@@ -42,10 +43,13 @@ class ArticleController extends Controller
         $validatedData = $request->validate([
             'title'=>'required',
             'text'=>'required',
-            'img'=>'required',
+            'img'=>'required|image',
             'tags'=>'required'
         ]);
-
+       
+        // guardar el archivo en nuestra memoria
+        $path = $validatedData['img']->store('public/articles');
+        $validatedData['img'] = $path;
         //Guardamos el articulo con mass assignement
         $article = Article::create($validatedData);
         
@@ -68,10 +72,14 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
+        // if(!$article = Article::find($id)){
+        //     return redirect()->route('home')->withMessage("Articulo no encontrado");
+        // }
+        
         $article = Article::findOrFail($id);
        
-        return view('articles.show',compact('article'));
-       // return view('articles.show',['article'=>$article]);
+        // return view('articles.show',compact('article'));
+        return view('articles.show',['article'=>$article]);
 
     }
 
@@ -98,13 +106,20 @@ class ArticleController extends Controller
     public function update(Request $request, $id)
     {
         $article = Article::findOrFail($id);
-
+        
         $validatedData = $request->validate([
             'title'=>'required',
-            'text'=>'required',
-            'img'=>'required',
+            'text'=>'required|min:5',
+            'img'=>'image',
             'tags'=>'required'
         ]);
+        
+        if(isset($validatedData['img'])){
+            $path = $validatedData['img']->store('public/articles');
+            $validatedData['img'] = $path;
+            // borrar la vieja imagen
+            Storage::delete($article->img);
+        }
 
         $article->update($validatedData);
 
