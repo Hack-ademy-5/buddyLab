@@ -25,5 +25,6 @@
     @include('layouts._footer')
     
     <script src="{{mix('js/app.js')}}"></script>
+    @stack('js')
   </body>
 </html>

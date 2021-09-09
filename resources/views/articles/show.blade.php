@@ -25,7 +25,7 @@
 <div class="row">
     <div class="col-12">
         <img src="{{$article->img}}" alt="" class="img-fluid">
-        <p>{{$article->text}}</p>
+        <p>{!!$article->text!!}</p>
     </div>
 </div>
 
